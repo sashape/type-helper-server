@@ -2,9 +2,7 @@ import * as dotenv from 'dotenv' // see https://github.com/motdotla/dotenv#how-d
 
 export async function handlePrompt(req, res) {
   res.send(
-      [
-        {"role": "user", "content": "Say this is a test!"}
-      ]
+      { "ok": true, "message": req.body.prompt }
   );
   return;
   const apiKey = dotenv.config().parsed.TOKEN;
@@ -12,7 +10,7 @@ export async function handlePrompt(req, res) {
   const temperature = 0.7;
   const maxTokens = 50;
   const messages = [
-    {"role": "user", "content": "Say this is a test!"}
+    {"role": "user", "content": req.body.prompt }
   ]
   /*
   model": "gpt-3.5-turbo",
@@ -46,6 +44,9 @@ export async function handlePrompt(req, res) {
   //   status: 200, /* Defaults to 200 */
   //   body: 'no ok'
   // }
-  console.log('Hello')
-  res.send(answer);
+
+  console.log(answer)
+  res.send(
+      { "ok": true, "message": answer.choices[0].message.content }
+  );
 }

@@ -6,10 +6,16 @@ const port = 5000
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "*");
+  res.header("Access-Control-Allow-Headers", "Content-Type");
+  next();
+});
 app.get('/', (req, res) => {
   res.send('Main page');
 });
-app.get('/prompt', handlePrompt);
+app.post('/prompt', handlePrompt);
 // Роут для авторизации пользователя
 app.post('/auth', (req, res) => {
   // Здесь можно добавить логику авторизации с помощью JWT и MongoDB
